@@ -211,14 +211,14 @@ python simple_start.py
 ```
 
 ### 8. Access the Interface
-- **Open WebUI**: http://localhost:8000
+- **Open WebUI**: http://localhost:3000
 - **API Documentation**: http://localhost:8000/docs
 - **Health Check**: http://localhost:8000/health
 
 ## 📖 Usage Guide
 
 ### Basic Chat Interface
-1. Open your browser and navigate to `http://localhost:8000`
+1. Open your browser and navigate to `http://localhost:3000`
 2. Start a new conversation
 3. Ask questions about your uploaded documents
 4. View source citations and confidence scores
