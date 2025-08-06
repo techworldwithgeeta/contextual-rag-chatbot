@@ -92,8 +92,7 @@ graph TB
 # Core models for RAG pipeline
 ollama pull llama2:13b
 ollama pull llama2:7b
-ollama pull mistral:7b
-ollama pull codellama:7b
+
 
 # Optional: Specialized models
 ollama pull llama2:13b-chat
@@ -104,7 +103,7 @@ ollama pull codellama:13b
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/contextual-rag-chatbot.git
+git clone https://github.com/techworldwithgeeta/contextual-rag-chatbot.git
 cd contextual-rag-chatbot
 ```
 
@@ -124,16 +123,35 @@ sudo apt update
 sudo apt install postgresql postgresql-contrib
 
 # Install pgvector extension
-sudo apt install postgresql-15-pgvector
+# using Docker
+docker pull pgvector/pgvector:pg16
 
-# Or using Docker
-docker run -d \
-  --name postgres-rag \
-  -e POSTGRES_PASSWORD=rag_password \
-  -e POSTGRES_DB=rag_db \
-  -e POSTGRES_USER=rag_user \
-  -p 5432:5432 \
-  pgvector/pgvector:pg15
+docker volume create pgvector-data
+command to check 
+docker volume ls
+
+docker run --name pgvector-container -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=vectordb -p 5433:5432 -v pgvector-data:/var/lib/postgresql/data -d pgvector/pgvector:pg16
+
+
+#pgadmin    
+docker pull dpage/pgadmin4
+
+docker run --name pgadmin-container -p 5050:80 -e PGADMIN_DEFAULT_EMAIL=user@domain.com -e PGADMIN_DEFAULT_PASSWORD=password -d dpage/pgadmin4
+docker ps
+
+http://localhost:5050
+#provide email and password and then register server as vecordatabase and hostname as 172.17.0.3 ,username postgres
+
+
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 
+
+# After Register server ,create database vectordb
+# then query tool and enable vector extenston
+
+CREATE EXTENSION vector;
+# Set Up Open Web UI
+
+
 ```
 
 ### 4. Configure Environment
@@ -232,7 +250,7 @@ import requests
 # Upload a document
 with open('document.pdf', 'rb') as f:
     response = requests.post(
-        'http://localhost:8000/documents/upload',
+        'http://localhost:8001/documents/upload',
         files={'file': f}
     )
     print(response.json())
