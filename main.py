@@ -14,6 +14,21 @@ from pathlib import Path
 os.environ['EMBEDDING_MODEL'] = 'text-embedding-ada-002'
 os.environ['EMBEDDING_DIMENSION'] = '1536'
 
+# Setup Phoenix OTEL BEFORE any other imports
+try:
+    from phoenix.otel import register
+    # Register the application with Phoenix OTEL
+    tracer_provider = register(
+        project_name="rag-chatbot",
+        endpoint="http://localhost:6006/v1/traces",
+        auto_instrument=True
+    )
+    print("✅ Phoenix OTEL registered successfully")
+except ImportError:
+    print("⚠️ Phoenix OTEL not available - install with: pip install arize-phoenix-otel")
+except Exception as e:
+    print(f"⚠️ Phoenix OTEL setup failed: {e}")
+
 # Configure logging first
 logging.basicConfig(
     level=logging.INFO,
