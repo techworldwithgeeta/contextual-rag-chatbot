@@ -196,6 +196,24 @@ Case Study/
 *.pptx
 *.xlsx
 
+# Video and media files (large files)
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+*.mkv
+*.m4v
+*.3gp
+*.mpg
+*.mpeg
+*.wav
+*.mp3
+*.flac
+*.aac
+*.ogg
+
 # Test files and temporary scripts
 test_*.py
 quick_test*.py
