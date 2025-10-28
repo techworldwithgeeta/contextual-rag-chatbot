@@ -6,37 +6,94 @@
 [![RAG Pipeline](https://img.shields.io/badge/RAG-LlamaIndex%20%2B%20PGVector-green.svg)](https://github.com/run-llama/llama_index)
 [![Evaluation](https://img.shields.io/badge/Evaluation-RAGAs%20%2B%20Phoenix-orange.svg)](https://github.com/explodinggradients/ragas)
 
-A comprehensive **Contextual RAG (Retrieval-Augmented Generation) Chatbot** system that processes case study documents and provides intelligent responses through an interactive web interface. Built with modern AI/ML technologies and designed for enterprise-grade document Q&A applications.
+A comprehensive **Procurement & Business Process Management RAG Chatbot** system that processes procurement documents, HR bylaws, and business process manuals to provide intelligent, context-aware responses. Built with modern AI/ML technologies and designed specifically for enterprise procurement and business process assistance.
 
-## 🚀 Features
+## 🎯 Use Case: Procurement & Business Process Management
 
-### 📄 **Document Processing**
-- **Multi-format Support**: PDF, DOCX, TXT, PPTX
-- **Intelligent Text Extraction**: Using Docling for advanced document processing
-- **Smart Chunking**: Context-aware document segmentation
-- **Metadata Preservation**: Maintains document structure and relationships
+This RAG chatbot is specifically designed for **enterprise procurement and business process management**, providing intelligent assistance with:
 
-### 🔍 **Advanced RAG Pipeline**
-- **Contextual Embeddings**: Anthropic-style embedding models
-- **Semantic Search**: PGVector-powered vector similarity search
-- **Dynamic Re-ranking**: Intelligent result reordering
-- **Source Citations**: Transparent reference tracking
+### 📋 **Procurement Management**
+- **Procurement Standards & Frameworks**: Abu Dhabi Procurement Standards, Ariba-aligned processes
+- **Business Process Guidance**: Step-by-step procurement procedures and workflows
+- **Compliance & Regulations**: Legal requirements and regulatory compliance
+- **Supplier Management**: Vendor evaluation, selection, and relationship management
+- **Contract Management**: Contract terms, evaluation criteria, and legal adherence
 
-### 🤖 **Agentic Framework**
-- **Crew.AI Integration**: Multi-agent collaboration for complex queries
-- **Specialized Agents**: Domain-specific task optimization
-- **Prompt Engineering**: A/B testing and optimization
+### 🏢 **Business Process Support**
+- **HR Bylaws & Policies**: Human resources policies and procedures
+- **Information Security**: Security standards and compliance requirements
+- **Process Documentation**: Business process manuals and operational guidelines
+- **Stakeholder Coordination**: Cross-functional collaboration and communication
 
-### 📊 **Evaluation & Monitoring**
-- **Arize Phoenix**: Comprehensive prompt evaluation and tracing
-- **RAGAs Metrics**: Precision, recall, faithfulness, answer correctness
-- **Performance Monitoring**: Real-time system health tracking
+### 💼 **Enterprise Features**
+- **Multi-Document Knowledge Base**: Processes PDFs, DOCX, and text documents
+- **Context-Aware Responses**: Maintains document structure and professional terminology
+- **Source Citations**: Transparent reference tracking with page numbers and document sources
+- **Quality Assurance**: Comprehensive evaluation and monitoring capabilities
 
-### 🌐 **Modern Web Interface**
-- **Open WebUI Integration**: Beautiful, responsive chat interface
-- **FastAPI Backend**: High-performance API endpoints
-- **Real-time Chat**: Seamless conversation experience
-- **Document Source Highlighting**: Transparent information sources
+## 🚀 Technical Features
+
+### 📄 **Document Processing - Docling Data Pipeline & Storage**
+- **Multi-format Support**: PDF, DOCX, TXT, PPTX with advanced parsing
+- **Intelligent Text Extraction**: Using Docling for enterprise-grade document processing
+- **Smart Chunking**: Context-aware document segmentation with metadata preservation
+- **Fast Processing Mode**: Optimized for speed with OCR disabled for faster processing
+- **Storage Pipeline**: Automatic document storage and vector indexing
+
+### 🔍 **LlamaIndex + PGVector/PostgreSQL RAG Methodology**
+- **Vector Search**: PGVector-powered semantic similarity search
+- **PostgreSQL Integration**: Full database integration with connection pooling
+- **Contextual Retrieval**: Advanced context-aware document retrieval
+- **Source Citations**: Transparent reference tracking with metadata
+- **Scalable Architecture**: Enterprise-ready vector database solution
+
+### 🧠 **Contextual RAG (Anthropic-style) Embedding / LLM / Re-ranking Models**
+- **Advanced Embeddings**: OpenAI text-embedding-ada-002 (1536 dimensions)
+- **Contextual Re-ranking**: Multi-factor scoring (relevance, freshness, authority)
+- **Intelligent Scoring**: Sophisticated document ranking algorithms
+- **OpenAI Integration**: Complete embedding and re-ranking pipeline
+- **Fallback Systems**: Graceful degradation when services unavailable
+
+### 🏠 **Locally Hosted Models via Ollama**
+- **Local LLM Hosting**: Complete Ollama integration for privacy and control
+- **Model Support**: Gemma3:1b, Llama2:7b, Llama2:13b with dynamic switching
+- **Intelligent Timeout**: Dynamic timeout management based on query complexity
+- **Fallback Models**: Multiple model fallback system for reliability
+- **Performance Optimization**: Efficient local model utilization
+
+### 🤖 **Agentic Framework - Crew.AI Prompt Optimization**
+- **Multi-Agent System**: Specialized agents for different tasks
+- **Response Enhancement**: Advanced query processing and response improvement
+- **Prompt Engineering**: A/B testing and optimization capabilities
+- **Task Management**: Sequential and parallel task processing
+- **Domain Expertise**: Procurement and document-specific agent specialization
+
+### 📊 **Arize Phoenix Prompt Playground Evaluation**
+- **OpenTelemetry Integration**: Complete tracing and monitoring setup
+- **Query Tracing**: Comprehensive query and response tracing
+- **Performance Metrics**: Real-time performance and quality metrics
+- **Project Management**: Phoenix project creation and management
+- **Visualization**: Interactive dashboards for prompt evaluation
+
+### 🔬 **RAGAs LLMOps (Tracing & Debugging)**
+- **Comprehensive Evaluation**: Precision, recall, faithfulness, answer correctness
+- **CSV Export**: Evaluation data export and analysis capabilities
+- **Fallback Metrics**: Graceful degradation when RAGAs unavailable
+- **Performance Monitoring**: Real-time system health and quality tracking
+- **Debugging Tools**: Advanced debugging and troubleshooting capabilities
+
+### 🌐 **Arize Phoenix Chatbot Interface**
+- **FastAPI Backend**: High-performance REST API implementation
+- **Real-time Chat**: Seamless conversation experience with streaming
+- **Health Monitoring**: Comprehensive system health and status endpoints
+- **CORS Support**: Cross-origin request handling for web integration
+- **API Documentation**: Interactive API documentation with Swagger UI
+
+### 🔗 **Open WebUI Integration**
+- **Seamless Integration**: Complete Open WebUI connector implementation
+- **Model Configuration**: Automatic RAG model configuration for Open WebUI
+- **API Endpoints**: Proper API endpoint configuration and management
+- **Status Monitoring**: Real-time integration status and health monitoring
 
 ## 🏗️ Architecture
 
