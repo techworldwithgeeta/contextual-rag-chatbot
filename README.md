@@ -133,6 +133,7 @@ graph TB
 | **Evaluation** | Arize Phoenix + RAGAs | Performance metrics and tracing |
 | **Web Interface** | Open WebUI + FastAPI | User interface and API |
 | **Database** | PostgreSQL + pgvector | Vector storage |
+| **Tracing** | OpenTelemetry | Comprehensive system monitoring |
 
 ## 📋 Prerequisites
 
@@ -147,14 +148,15 @@ graph TB
 ### Required Models (via Ollama)
 ```bash
 # Core models for RAG pipeline
-ollama pull llama2:13b
+ollama pull gemma3:1b
 ollama pull llama2:7b
-
+ollama pull llama2:13b
 
 # Optional: Specialized models
-ollama pull llama2:13b-chat
-ollama pull codellama:13b
+ollama pull mistral:7b
+ollama pull codellama:7b
 ```
+
 
 ## 🚀 Quick Start
 
@@ -211,7 +213,20 @@ CREATE EXTENSION vector;
 
 ```
 
-### 4. Configure Environment
+### 4. Set Up Ollama
+```bash
+# Install Ollama
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# Start Ollama service
+ollama serve
+
+# Pull required models
+ollama pull gemma3:1b
+ollama pull llama2:7b
+```
+
+### 5. Configure Environment
 ```bash
 # Copy environment template
 cp .env.example .env
@@ -232,69 +247,114 @@ POSTGRES_PASSWORD=rag_password
 
 # Ollama Configuration
 OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=llama2:13b
+OLLAMA_MODEL=gemma3:1b
+OLLAMA_TIMEOUT=60
 
 # Embedding Model
-EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+# EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+EMBEDDING_MODEL=text-embedding-ada-002
+EMBEDDING_DIMENSION=1536
 
-# Arize Phoenix (Optional)
-ARIZE_API_KEY=your_arize_api_key
-ARIZE_SPACE_KEY=your_space_key
+# Application Settings
+WEB_HOST=localhost
+WEB_PORT=8001
+LOG_LEVEL=INFO
+FAST_DOCUMENT_PROCESSING=true
 
-# Crew.AI (Optional)
-OPENAI_API_KEY=your_openai_api_key
+# Arize Phoenix Configuration (Optional)
+PHOENIX_PROJECT_NAME=rag-chatbot
+PHOENIX_COLLECTOR_ENDPOINT=http://localhost:6006
+ENABLE_PHOENIX_TRACING=true
+
+# RAGAs Configuration (Optional)
+ENABLE_RAGAS_EVALUATION=true
+RAGAS_DATASET_PATH=data/evaluation/
+
 ```
 
-### 5. Initialize Database
+### 6. Initialize Database
 ```bash
 # Create database schema
 python scripts/init_database.py
 ```
 
-### 6. Process Documents
+### 7. Process Documents
 ```bash
 # Add your documents to the Case Study/ folder
 # Then process them
 python scripts/process_documents.py
 ```
 
-### 7. Start the Application
+### 8. Start the Application
 ```bash
-# Start the RAG backend
-python main.py
+**Option 1: Start Phoenix Server (Recommended)**
+```bash
+# Terminal 1: Start Phoenix server
+python start_phoenix_server.py
 
-# Or use the simple start script
-python simple_start.py
+# Terminal 2: Start main application
+python main.py --host localhost --port 8001
 ```
 
-### 8. Access the Interface
+**Option 2: Start without Phoenix**
+```bash
+# Start main application only
+python main.py --host localhost --port 8001 --no-phoenix
+```
+
+### 9. Access the Interface
 - **Open WebUI**: http://localhost:3000
-- **API Documentation**: http://localhost:8000/docs
-- **Health Check**: http://localhost:8000/health
+- **API Documentation**: http://localhost:8001/docs
+- **Health Check**: http://localhost:8001/health
+- **Chat Endpoint**: http://localhost:8001/chat
+- **Phoenix Dashboard**: http://localhost:6006 (if Phoenix is running)
 
 ## 📖 Usage Guide
 
 ### Basic Chat Interface
-1. Open your browser and navigate to `http://localhost:3000`
-2. Start a new conversation
-3. Ask questions about your uploaded documents
-4. View source citations and confidence scores
+1.1. Add your procurement documents to the `Case Study/` folder:
+   - **Procurement Standards**: Abu Dhabi Procurement Standards, Ariba-aligned manuals
+   - **HR Documents**: HR Bylaws and policies
+   - **Security Documents**: Information Security standards
+   - **Process Manuals**: Business process documentation
+2. The system will automatically process them on startup
+3.  Open your browser and navigate to `http://localhost:3000`
+4. Start a new conversation
+5. Ask questions about your uploaded documents
+6. View source citations and confidence scores
+
+### Example Queries
+```bash
+# Procurement Standards
+"What are the procurement standards?"
+"How does the procurement process work?"
+"What are the key principles of procurement?"
+
+# Business Process Management
+"Explain Section 4: Procurement Clients and Partners"
+"What documents are required for procurement?"
+"How is procurement transparency ensured?"
+
+# HR and Compliance
+"What are the HR bylaws?"
+"What are the information security requirements?"
+```
 
 ### API Endpoints
 ```bash
 # Health check
-curl http://localhost:8000/health
+curl http://localhost:8001/health
 
 # Chat endpoint
-curl -X POST http://localhost:8000/chat \
+curl -X POST http://localhost:8001/chat \
   -H "Content-Type: application/json" \
   -d '{"message": "What are the procurement standards?"}'
 
 # List documents
-curl http://localhost:8000/documents
+curl http://localhost:8001/docs
 
 # Upload new document
-curl -X POST http://localhost:8000/documents/upload \
+curl -X POST http://localhost:8001/documents/upload \
   -F "file=@your_document.pdf"
 ```
 
